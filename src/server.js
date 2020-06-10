@@ -83,7 +83,7 @@ export const start = async () => {
     }, product, coupon, user),
     context({ req }) {
       // use the authenticate function from utils to auth req, its Async!
-      return { user: null }
+      return { user: {role: "Admin", _id: 123123}}
     }
   })
 

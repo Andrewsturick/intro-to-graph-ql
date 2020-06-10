@@ -100,12 +100,6 @@ describe('Product schema', () => {
             price
             image
             type
-<<<<<<< HEAD
-            range
-            liquidCooled
-            bikeType
-=======
->>>>>>> lesson-4
           }
         }
       `
@@ -123,12 +117,6 @@ describe('Product schema', () => {
             price
             image
             type
-<<<<<<< HEAD
-            range
-            liquidCooled
-            bikeType
-=======
->>>>>>> lesson-4
           }
         }
       `
@@ -145,12 +133,6 @@ describe('Product schema', () => {
             price
             image
             type
-<<<<<<< HEAD
-            range
-            liquidCooled
-            bikeType
-=======
->>>>>>> lesson-4
           }
         }
       `
@@ -177,12 +159,6 @@ describe('Product schema', () => {
             price
             image
             type
-<<<<<<< HEAD
-            range
-            liquidCooled
-            bikeType
-=======
->>>>>>> lesson-4
           }
         }
       `
@@ -206,12 +182,6 @@ describe('Product schema', () => {
             price
             image
             type
-<<<<<<< HEAD
-            range
-            liquidCooled
-            bikeType
-=======
->>>>>>> lesson-4
           }
         }
       `

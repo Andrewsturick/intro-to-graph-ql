@@ -2,6 +2,7 @@ import { Product, productSchema } from './product.model'
 import { User, roles } from '../user/user.model'
 
 import mongoose from 'mongoose'
+import { AuthenticationError } from 'apollo-server'
 
 const productsTypeMatcher = {
   GAMING_PC: 'GamingPc',
@@ -11,7 +12,7 @@ const productsTypeMatcher = {
 
 const product = (_, args, ctx) => {
   if (!ctx.user) {
-    
+    throw new AuthenticationError()
   }
   console.log(args.id, "this is the id!!!")
   return Product
@@ -22,7 +23,7 @@ const product = (_, args, ctx) => {
 
 const products = (_, args, ctx) => {
   if (!ctx.user) {
-    
+    throw new AuthenticationError()
   }
 
   return Product
@@ -32,8 +33,8 @@ const products = (_, args, ctx) => {
 }
 
 const updateProduct = (_, args, ctx) => {
-  if (!ctx.user) {
-    
+  if (!ctx.user || ctx.user.role !== "Admin") {
+    throw new AuthenticationError() 
   }
 
   return Product.findByIdAndUpdate(args.id, args.input, {new: true}, )
@@ -42,14 +43,17 @@ const updateProduct = (_, args, ctx) => {
 }
 
 const removeProduct =  (_, args, ctx) => {
-  if (!ctx.user) {
-    
+  if (!ctx.user || ctx.user.role !== "Admin") {
+    throw new AuthenticationError()
   }
 
   return Product.findByIdAndDelete(args.id);
 }
 
 const newProduct =  (_, args, ctx) => {
+  if (!ctx.user || ctx.user.role !== "admin") {
+    throw new AuthenticationError()
+  }
   return Product.create({...args.input, createdBy: ctx.user._id});
 }
 
@@ -65,7 +69,9 @@ export default {
     updateProduct,
   },
   Product: {
-    __resolveType(product) {},
+    __resolveType(product) {
+      return productsTypeMatcher[product.type];
+    },
     createdBy(product) {
       return User.findById(product.createdBy).lean().exec();
     }
