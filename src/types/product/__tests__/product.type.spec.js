@@ -100,6 +100,9 @@ describe('Product schema', () => {
             price
             image
             type
+            range
+            liquidCooled
+            bikeType
           }
         }
       `
@@ -117,6 +120,9 @@ describe('Product schema', () => {
             price
             image
             type
+            range
+            liquidCooled
+            bikeType
           }
         }
       `
@@ -133,6 +139,9 @@ describe('Product schema', () => {
             price
             image
             type
+            range
+            liquidCooled
+            bikeType
           }
         }
       `
@@ -159,6 +168,9 @@ describe('Product schema', () => {
             price
             image
             type
+            range
+            liquidCooled
+            bikeType
           }
         }
       `
@@ -182,6 +194,9 @@ describe('Product schema', () => {
             price
             image
             type
+            range
+            liquidCooled
+            bikeType
           }
         }
       `
