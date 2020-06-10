@@ -1,5 +1,5 @@
 # Intro to GraphQL
-> Scott Moss & Frontend Masters
+> Copy of Scott Moss & Frontend Masters repo. Copying so commits can be tracked on my github
 
 ## Resources
 * [Slides](https://slides.com/scotups/intro-to-graphql)
