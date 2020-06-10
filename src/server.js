@@ -7,42 +7,57 @@ import product from './types/product/product.resolvers'
 import coupon from './types/coupon/coupon.resolvers'
 import user from './types/user/user.resolvers'
 
-const types = ['product', 'coupon', 'user']
+
+const types = ['product', 'coupon', 'user'];
 
 export const start = async () => {
   const rootSchema = `
-  type Cat {
-    name: String
-  }
+    interface Animal {
+      species: String
+      age: Int
+    }
+    
+    type Gorilla implements Animal {
+      species: String
+      age: Int
+      sex: String
+    }
 
-  type Dog {
-    name: String,
-    age: Int!,
-    bark: String!
-  }
+    type Crocodile implements Animal {
+      species: String
+      age: Int
+      teeth: Int!
+    }
 
-  type Query {
-    myCat: Cat!
-    myDog: Dog!
-    hello: String
-  }
+    type Moose implements Animal {
+      species: String
+      age: Int
+      antlers: Int
+    }
 
-  input NewCatInput {
-    name: String
-  }
+    type Cat {
+      name: String!
+      owner: Owner,
+      age: Int
+    }
 
-  input NewDogInput {
-    name: String
-    age: Int
-  }
+    type Owner {
+      name: String!
+      cat: Cat
+      age: Int
+    }
 
+    extend type Query {
+      animals(len: Int) : [Animal]
+      cat(name: String) : Cat
+      owner(name: String) : Owner
+    }
 
-  type Mutation {
-    newCat(newCatInput: NewCatInput!, num: Int) : Cat
-    newDog(newDogInput: NewDogInput!, num: Int) : Dog
-  }
-  
-  schema {
+    extend type Mutation {
+      car(name: String): String
+    }
+
+    schema {
       query: Query
       mutation: Mutation
     }
@@ -50,22 +65,23 @@ export const start = async () => {
   const schemaTypes = await Promise.all(types.map(loadTypeSchema))
 
   const server = new ApolloServer({
-    typeDefs: [rootSchema],
-    resolvers: {
-      Mutation: {
-      },
+    typeDefs: [rootSchema, ...schemaTypes],
+    resolvers: merge({
       Query: {
-        myCat() {
-          return {name: "garfield"};
-        },
-        myDog() {
-          return {name: "murph", age: 12, bark: "woof!", feet: 4};
-        },
-        hello() {
-          return "hi";
+        animals(_, args) {
+            return [{species: 'Moose'}, {species: 'Gorilla'}, {species: "Crocodile", teeth: 12}].slice(0, args.len * 2);
         }
       },
-    },  context({ req }) {
+      Mutation: {
+        
+      },
+      Animal: {
+        __resolveType(animal) {
+          return animal.species;
+        }
+      }
+    }, product, coupon, user),
+    context({ req }) {
       // use the authenticate function from utils to auth req, its Async!
       return { user: null }
     }

@@ -48,6 +48,9 @@ export const productSchema = new mongoose.Schema(
       type: mongoose.SchemaTypes.ObjectId,
       required: true,
       ref: 'user'
+    },
+    id: {
+      type: Number,
     }
   },
   { timestamps: true }
