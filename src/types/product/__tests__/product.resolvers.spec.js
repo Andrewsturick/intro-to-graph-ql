@@ -16,6 +16,8 @@ describe('Resolvers', () => {
         createdBy: user
       })
 
+      console.log(">>>>>>>>>>> aboutto  query")
+      
       const result = await resolvers.Query.product(
         null,
         { id: product._id },
@@ -122,6 +124,19 @@ describe('Resolvers', () => {
         email: 'yo@yo.com',
         password: 'asdfsd',
         apiKey: '834slsdkfjf'
+      })
+
+      const args = {
+        input: {
+          name: 'Monster v5 bike',
+          price: 450,
+          bikeType: 'KIDS',
+          type: 'BIKE'
+        }
+      }
+
+      const newProduct = await resolvers.Mutation.newProduct(null, args, {
+        user: { role: 'admin', _id: user._id }
       })
 
       const result = await resolvers.Product.createdBy({ createdBy: user._id })
